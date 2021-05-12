@@ -118,7 +118,7 @@ h_median_df$FIFTY_PERCENT <- round(h_median_df$FIFTY_PERCENT, digits = 2)
 h_median_df$SIXTY_PERCENT <- round(h_median_df$SIXTY_PERCENT, digits = 2)
 
 red_pal <- function(x) rgb(colorRamp(c("#FF4D4D", "#FFCCCC"))(x), maxColorValue = 255)
-green_pal <- function(x) rgb(colorRamp(c("#56FF4D", "#CCFFCD"))(x), maxColorValue = 255)
+green_pal <- function(x) rgb(colorRamp(c("#69FF6C", "#CCFFCD"))(x), maxColorValue = 255)
 
 belowh <- h_median_df[h_median_df$ADJ_MEDIAN < 25,]$ADJ_MEDIAN
 aboveh <- h_median_df[h_median_df$ADJ_MEDIAN >= 25,]$ADJ_MEDIAN
@@ -127,12 +127,13 @@ abovefifty <- h_median_df[h_median_df$FIFTY_PERCENT_ADJ >= 15,]$FIFTY_PERCENT_AD
 belowsixty <- h_median_df[h_median_df$SIXTY_PERCENT_ADJ < 15,]$SIXTY_PERCENT_ADJ
 abovesixty <- h_median_df[h_median_df$SIXTY_PERCENT_ADJ >= 15,]$SIXTY_PERCENT_ADJ
 
-summarise(h_median_df, AREA_TITLE, PRIM_STATE, 
+summarise(h_median_df, AREA_TITLE, 
           ADJ_MEDIAN, FIFTY_PERCENT_ADJ, SIXTY_PERCENT_ADJ) %>%
   reactable(
+    style = list(fontFamily = "Work Sans, sans-serif", fontSize = "14px"),
+    defaultPageSize = 35,
     columns = list(
       AREA_TITLE = colDef(name = "Area Name"),
-      PRIM_STATE = colDef(name = "State"),
       ADJ_MEDIAN = colDef(name = "Adjusted Median Wage",
         style = function(value) {
         ifelse(value >= (25),
