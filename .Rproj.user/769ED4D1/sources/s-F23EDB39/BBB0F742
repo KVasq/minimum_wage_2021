@@ -1,0 +1,26 @@
+{
+    "id": "BBB0F742",
+    "path": "~/Data Science/minimum_wage_2021/minimum-wage.R",
+    "project_path": "minimum-wage.R",
+    "type": "r_source",
+    "hash": "2292727026",
+    "contents": "",
+    "dirty": true,
+    "created": 1620320746707.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "101,0",
+        "scrollLine": "81"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1620835078,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1620833935329,
+    "read_only": false,
+    "read_only_alternatives": []
+}
