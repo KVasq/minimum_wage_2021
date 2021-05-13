@@ -1,1 +1,32 @@
-# minimum_wage_2021
+# $15 Federal Minimum Wage
+
+## Part 1 : Too High or Low?
+
+During the drafting and amendment phases of the American Rescure Plan bill, Democrats in the House and Senate proposed the [Raise the Wage Act](https://www.congress.gov/congressional-report/116th-congress/house-report/150) which aimed to incremently increase the federal minimum wage to $15 by 2025, from the $7.25 wage legalised since 2009. Although it eventually wasn't included in the passed bill, it remains a key point in the bulleted wish list of progressive Congress democrats. Eighteen states have approved bills to raise the state floor to $15, including most recently [Florida](https://www.cnbc.com/2020/11/04/florida-votes-to-raise-minimum-wage-to-15-in-2020-election.html) which gave its majority vote to Trump in the 2020 election. However, aside from political feasibility, is 15$ an appropriate national limit or is it better to consider a lower goalpost/heed to state legistature? 
+
+US [nation-wide analysis](https://www.cbo.gov/system/files/2019-07/CBO-55410-MinimumWage2019.pdf) by the Congressional Budget Office shows mild to significant wage increases as the minimum increases to 15$, with 17 million workers seeing their wage increasing to meet the minimum. However the number of those that are estimated to be lifted out of poverty by this increase is estimated to match the number of those that would lose employment as a direct effect of wage increases. 
+
+To deem a "safe" threshold for minimum wage, a common metric used is the [ratio of minimum wage to median wage](https://www.ilo.org/global/topics/wages/minimum-wages/setting-adjusting/WCMS_439253/lang--en/index.htm), which most developed countries tend to keep between [40% to 60%](https://stats.oecd.org/Index.aspx?DataSetCode=MIN2AVE#). We'll use this metric on a dataset of overall wages in 389 metro area in the US and see how many under a $15 minimum wage would lie within this threshold. All wages in the dataset are adjusted on the average [CPI projected inflation](https://knoema.com/kyaewad/us-inflation-forecast-2021-2022-and-long-term-to-2030-data-and-charts) over the next 5 years.
+
+![farwest](https://github.com/KVasq/minimum_wage_2021/blob/main/wage_pct_farwest.png)
+
+![mideast](https://github.com/KVasq/minimum_wage_2021/blob/main/wage_pct_mideast.png)
+
+![newengland](https://github.com/KVasq/minimum_wage_2021/blob/main/wage_pct_newengland.png)
+
+![plains](https://github.com/KVasq/minimum_wage_2021/blob/main/wage_pct_plains.png)
+
+![rockies](https://github.com/KVasq/minimum_wage_2021/blob/main/wage_pct_rockies.png)
+
+![southeast](https://github.com/KVasq/minimum_wage_2021/blob/main/wage_pct_southeast.png)
+
+![southwest](https://github.com/KVasq/minimum_wage_2021/blob/main/wage_pct_southwest.png)
+
+**Out of the 389 metro areas, 35 fall under the maximum 60% threshold and 6 areas under 50% - only 9% of metro areas are within the "safe" threshold for minimum wage.**
+
+Below is the table of the metropolitan areas in this threshold:
+
+![table](https://github.com/KVasq/minimum_wage_2021/blob/main/greenareas.png)
+
+In the next part we will try to estimate a national wage that would suit requirements set; because of observed high variance among all areas, we will then quantify the variation of wages within and between states, before estimating suitable state-level minimum wages.
+
