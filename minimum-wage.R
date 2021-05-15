@@ -165,3 +165,49 @@ summarise(h_median_df, AREA_TITLE,
     )
   )
 
+#variance 
+hourly_median <- h_median_df$ADJ_MEDIAN
+var(hourly_median)
+sd(hourly_median)
+
+draw_boxplot <- function(r) {
+  subset(h_median_df, REGION == r) %>%
+    ggplot(mapping = aes(y=PCT_ADJ * 100, x=PRIM_STATE)) + 
+    geom_boxplot(aes(color=PRIM_STATE), alpha=0.8, size=1.2) +
+    geom_hline(yintercept=60, linetype="dashed", size=1.2) +
+    scale_color_manual(values = cbp2) +
+    labs(title =sprintf("$15 Wage as Percentage of Median Wage in Metropolitan Areas - %s",r), color="State", x="Metropolitan Areas per State", y="Percantage (%)") +
+    theme_minimal_hgrid() +
+    theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+}
+
+draw_boxplot("Southeast")
+
+#calculate minimum wage estimate to each state's median
+for (state in unique(h_median_df$PRIM_STATE)) {
+  h_median_df[h_median_df$PRIM_STATE == state,]$MIN_ESTIMATE <- median(h_median_df[h_median_df$PRIM_STATE == state,]$ADJ_MEDIAN * 0.6)
+}
+h_estimate_df <- data.frame(STATE = unique(h_median_df$PRIM_STATE),  )
+median(h_median_df[h_median_df$PRIM_STATE == "AL",]$ADJ_MEDIAN)
+median(h_median_df[h_median_df$PRIM_STATE == "AL",]$PCT_ADJ)
+
+
+h_median_df$MIN_ESTIMATE <- h_median_df$ADJ_MEDIAN * 0.6
+median(h_median_df[h_median_df$PRIM_STATE == "AL",]$MIN_ESTIMATE)
+
+draw_plot_estimate <- function(r) {
+  subset(h_median_df, REGION == r) %>%
+    ggplot(mapping = aes(y=MIN_ESTIMATE, x=PRIM_STATE)) + 
+    geom_point(aes(color=PRIM_STATE), alpha=0.8, size=5) +
+    geom_hline(yintercept=15, linetype="dashed", size=1.2) +
+    scale_color_manual(values = cbp2) +
+    stat_summary(fun = "median", fun.min = "median", fun.max="median",
+                 colour = "red", size = 2, aes(shape="median"),geom = "point") +
+    guides(colour=guide_legend(order=1), shape=guide_legend(title=NULL, order=2)) +
+    labs(title =sprintf("Minimum Wage Proposed Estimates for Each Metropolitan Areas - %s",r), color="State", x="Metropolitan Areas per State", y="Wage ($)") +
+    theme_minimal_hgrid() +
+    theme(axis.ticks.x = element_blank() 
+          )
+}
+
+draw_plot_estimate("Far West")
