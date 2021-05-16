@@ -183,31 +183,66 @@ draw_boxplot <- function(r) {
 
 draw_boxplot("Southeast")
 
-#calculate minimum wage estimate to each state's median
+#calculate minimum wage estimate to each state's average median wage
 for (state in unique(h_median_df$PRIM_STATE)) {
-  h_median_df[h_median_df$PRIM_STATE == state,]$MIN_ESTIMATE <- median(h_median_df[h_median_df$PRIM_STATE == state,]$ADJ_MEDIAN * 0.6)
+  h_median_df[h_median_df$PRIM_STATE == state,]$MIN_ESTIMATE <- median(h_median_df[h_median_df$PRIM_STATE == state,]$SIXTY_PERCENT_ADJ)
 }
 h_estimate_df <- data.frame(STATE = unique(h_median_df$PRIM_STATE),  )
-median(h_median_df[h_median_df$PRIM_STATE == "AL",]$ADJ_MEDIAN)
+mean(h_median_df[h_median_df$PRIM_STATE == "AL",]$ADJ_MEDIAN)
 median(h_median_df[h_median_df$PRIM_STATE == "AL",]$PCT_ADJ)
 
 
-h_median_df$MIN_ESTIMATE <- h_median_df$ADJ_MEDIAN * 0.6
+h_median_df$MIN_ESTIMATE <- h_median_df$SIXTY_PERCENT_ADJ
 median(h_median_df[h_median_df$PRIM_STATE == "AL",]$MIN_ESTIMATE)
 
 draw_plot_estimate <- function(r) {
   subset(h_median_df, REGION == r) %>%
-    ggplot(mapping = aes(y=MIN_ESTIMATE, x=PRIM_STATE)) + 
+    ggplot(mapping = aes(y=SIXTY_PERCENT_ADJ, x=PRIM_STATE)) + 
     geom_point(aes(color=PRIM_STATE), alpha=0.8, size=5) +
     geom_hline(yintercept=15, linetype="dashed", size=1.2) +
     scale_color_manual(values = cbp2) +
-    stat_summary(fun = "median", fun.min = "median", fun.max="median",
-                 colour = "red", size = 2, aes(shape="median"),geom = "point") +
+    stat_summary(fun = "mean", fun.min = "mean", fun.max="mean",
+                 colour = "red", size = 3, aes(shape="Mean"),geom = "point") +
     guides(colour=guide_legend(order=1), shape=guide_legend(title=NULL, order=2)) +
     labs(title =sprintf("Minimum Wage Proposed Estimates for Each Metropolitan Areas - %s",r), color="State", x="Metropolitan Areas per State", y="Wage ($)") +
     theme_minimal_hgrid() +
-    theme(axis.ticks.x = element_blank() 
+    theme(axis.ticks.x = element_blank(), axis.text.x = element_blank() 
           )
 }
 
 draw_plot_estimate("Far West")
+
+draw_plot_estimate("Southeast")
+
+draw_plot_estimate("New England")
+
+draw_plot_estimate("Mid East")
+
+draw_plot_estimate("Southwest")
+
+draw_plot_estimate("Plains")
+
+draw_plot_estimate("Rocky Mountains")
+
+#table of estimated min wage per state
+
+min_estimates <- c()
+
+for (state in unique(h_median_df$PRIM_STATE)) {
+  min_estimates <- c(min_estimates, mean(h_median_df[h_median_df$PRIM_STATE == state,]$SIXTY_PERCENT_ADJ))
+}
+
+
+
+state_minimums <- data.frame(STATE = unique(h_median_df$PRIM_STATE), MIN_ESTIMATE = min_estimates)
+
+state_minimums <- rbind(state_minimums, list("National", mean(state_minimums$MIN_ESTIMATE)))
+
+state_minimums %>%
+  reactable(style = list(fontFamily = "Work Sans, sans-serif", fontSize = "14px"),
+            defaultPageSize = 52,
+            columns = list(
+              STATE = colDef(name = "State"),
+              MIN_ESTIMATE = colDef(name= "Proposed Minimum Wage", cell = function(value){sprintf("$%.2f",value)})
+            ))
+
